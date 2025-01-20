@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="localhost,1434.DataLake.sa"
+  DTS:DTSID="{5CAE5228-311A-4934-B1FB-71484FC9DFC9}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=localhost,1434;User ID=sa;Initial Catalog=DataLake;Persist Security Info=True;Application Name=SSIS-ETL-Homicidios-DWH-{5CAE5228-311A-4934-B1FB-71484FC9DFC9}localhost,1434.DataLake.sa;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAr2A25IFZhkmmLgMdmH4HYgAAAAACAAAAAAAQZgAAAAEAACAAAAAnZXa0LHV9W3GTaClZn6JgswIHBmM1GZAgLWST0Fm1SgAAAAAOgAAAAAIAACAAAAAQpsxmvJZjU365ItMpbTZhmN77+t1BBYxvuyfhzOehLYAAAACNM/Vh4/evNBomvD+rqz5mCoNo5/+v5gF/uasNidpo6bJLxCbYHkOocCNVzu9M4yPkaqO+5/mQr46VafiTuLiIJSqeuLfoC9BafpltgWMAOONhMAYYzrBI/spoDFvnzYW3ieIe31DCziFXTyHpwprTTkhgNoGlwt7wC1W5J/9dmkAAAAAdhUrIyNCbYrf0oK2b0I/cPnEMtjTFc23i3RlSt1TEAdgGp8KnSV2jKmrw5mKV4BIviRDwWs5OIcvb7e6HYiB7</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

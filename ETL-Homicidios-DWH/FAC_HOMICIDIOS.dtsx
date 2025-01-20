@@ -1,0 +1,998 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/19/2025 9:59:08 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="JS"
+  DTS:CreatorName="JS\JS"
+  DTS:DTSID="{FFC66D37-38C7-4BE5-9770-1E3A6067C7D6}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5467.0"
+  DTS:LocaleID="9226"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{9EADF482-9A18-4EB3-92F5-A24BEAD1C14F}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost,1434.DWH.sa1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B4A23524-079F-4BC2-B1B6-491AA686FF30}"
+      DTS:ObjectName="localhost,1434.DWH.sa1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost,1434;User ID=sa;Initial Catalog=DWH;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Package1-{B4A23524-079F-4BC2-B1B6-491AA686FF30}localhost,1434.DWH.sa1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAr2A25IFZhkmmLgMdmH4HYgAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAtiBg1kVV9I1gdmEXLJmVAljJfss+TbLv7kP4XARD43AAAAAAOgAAAAAIAACAAAACeev1tPjN0yTj9H1ULjaCRFtG7uCt7Qv4769BQ/H3Z4yAAAAD2v7URr1ljYqus+S6OOHeL337C2irjFyMKS9GPJJE+ckAAAAC5pAMs7dQEsraubJqvzZJga9GK558/R0Ol/jrnR5YB4K+jBYBWybc822FUI+hYKWLJqzsXJ3JLDbb1OGf9b/HV</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Crear tabla FAC_HOMICIDIOS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Crear tabla FAC_HOMICIDIOS"
+      DTS:DTSID="{E4D5A380-F5B3-4C74-BAD0-C98785A29FD5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Crear tabla FAC_HOMICIDIOS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8A63596E-512D-41F5-82A5-1F1C06AB1DE6}"
+          SQLTask:SqlStatementSource="CREATE TABLE DWH.dbo.FAC_HOMICIDIOS (&#xA;&#x9;COD_HOMICIDIO int IDENTITY(1,1) NOT NULL,&#xA;&#x9;FECHA_HECHO date NOT NULL,&#xA;&#x9;COD_MPIO int NOT NULL,&#xA;&#x9;COD_ZONA int NOT NULL,&#xA;&#x9;COD_SEXO int NOT NULL,&#xA;&#x9;CANTIDAD int NOT NULL,&#xA;&#x9;CONSTRAINT FAC_HOMICIDIOS_PK PRIMARY KEY (COD_HOMICIDIO)&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{E31AB627-A1A1-41C0-A4D4-5E3B98FF1F59}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\Bsqueda de ZONAS"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Bsqueda de ZONAS"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DIM_Zonas]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DIM_Zonas]) [refTable]
+where [refTable].[NOM_ZONA] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="COD_ZONA" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="NOM_ZONA" dataType="DT_WSTR" length="8" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[ZONA]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Bsqueda de ZONAS.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost,1434.DWH.sa1]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost,1434.DWH.sa1]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Bsqueda de ZONAS.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Bsqueda de ZONAS.Inputs[Lookup Input].Columns[ZONA]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="ZONA"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[ZONA]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">NOM_ZONA</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task\Bsqueda de ZONAS.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Match Output].Columns[COD_ZONA]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="8"
+                      lineageId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Match Output].Columns[COD_ZONA]"
+                      name="COD_ZONA"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">NOM_ZONA</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task\Bsqueda de ZONAS.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task\Bsqueda de ZONAS.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Busqueda de sexos"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Busqueda de sexos"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DIM_SEXO]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DIM_SEXO]) [refTable]
+where [refTable].[NOM_SEXO] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="COD_SEXO" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="NOM_SEXO" dataType="DT_WSTR" length="10" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[SEXO]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Busqueda de sexos.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost,1434.DWH.sa1]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost,1434.DWH.sa1]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Busqueda de sexos.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Busqueda de sexos.Inputs[Lookup Input].Columns[SEXO]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SEXO"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[SEXO]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">NOM_SEXO</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task\Busqueda de sexos.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Match Output].Columns[COD_SEXO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="10"
+                      lineageId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Match Output].Columns[COD_SEXO]"
+                      name="COD_SEXO"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">NOM_SEXO</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task\Busqueda de sexos.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task\Busqueda de sexos.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Guardar en FAC_HOMICIDIOS"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."FAC_HOMICIDIOS"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Connections[IDbConnection]"
+                  connectionManagerID="{8A63596E-512D-41F5-82A5-1F1C06AB1DE6}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[localhost,1434.DWH.sa]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].Columns[CANTIDAD]"
+                      cachedDataType="i4"
+                      cachedName="CANTIDAD"
+                      externalMetadataColumnId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[CANTIDAD]"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[CANTIDAD]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].Columns[FECHA HECHO]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="FECHA HECHO"
+                      externalMetadataColumnId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_HECHO]"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[FECHA HECHO]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].Columns[COD_MUNI]"
+                      cachedDataType="i4"
+                      cachedName="COD_MUNI"
+                      externalMetadataColumnId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[COD_MPIO]"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[COD_MUNI]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].Columns[COD_ZONA]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="COD_ZONA"
+                      externalMetadataColumnId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[COD_ZONA]"
+                      lineageId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Match Output].Columns[COD_ZONA]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].Columns[SEXO]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SEXO"
+                      externalMetadataColumnId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[COD_SEXO]"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[SEXO]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[COD_HOMICIDIO]"
+                      dataType="i4"
+                      name="COD_HOMICIDIO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_HECHO]"
+                      dataType="dbTimeStamp"
+                      name="FECHA_HECHO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[COD_MPIO]"
+                      dataType="i4"
+                      name="COD_MPIO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[COD_ZONA]"
+                      dataType="i4"
+                      name="COD_ZONA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[COD_SEXO]"
+                      dataType="i4"
+                      name="COD_SEXO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input].ExternalColumns[CANTIDAD]"
+                      dataType="i4"
+                      name="CANTIDAD" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Leer DL_Homicidios"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Leer DL_Homicidios"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."DL_Homicidios"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Leer DL_Homicidios.Connections[IDbConnection]"
+                  connectionManagerID="{5CAE5228-311A-4934-B1FB-71484FC9DFC9}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[localhost,1434.DataLake.sa]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[FECHA HECHO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[FECHA HECHO]"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[FECHA HECHO]"
+                      name="FECHA HECHO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[COD_DEPTO]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[COD_DEPTO]"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[COD_DEPTO]"
+                      name="COD_DEPTO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[DEPARTAMENTO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[DEPARTAMENTO]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[DEPARTAMENTO]"
+                      name="DEPARTAMENTO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[COD_MUNI]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[COD_MUNI]"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[COD_MUNI]"
+                      name="COD_MUNI"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[MUNICIPIO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[MUNICIPIO]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[MUNICIPIO]"
+                      name="MUNICIPIO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[ZONA]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[ZONA]"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[ZONA]"
+                      name="ZONA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[SEXO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[SEXO]"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[SEXO]"
+                      name="SEXO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[CANTIDAD]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[CANTIDAD]"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].Columns[CANTIDAD]"
+                      name="CANTIDAD"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[FECHA HECHO]"
+                      dataType="wstr"
+                      length="50"
+                      name="FECHA HECHO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[COD_DEPTO]"
+                      dataType="i4"
+                      name="COD_DEPTO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[DEPARTAMENTO]"
+                      dataType="wstr"
+                      length="100"
+                      name="DEPARTAMENTO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[COD_MUNI]"
+                      dataType="i4"
+                      name="COD_MUNI" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[MUNICIPIO]"
+                      dataType="wstr"
+                      length="100"
+                      name="MUNICIPIO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[ZONA]"
+                      dataType="wstr"
+                      length="50"
+                      name="ZONA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[SEXO]"
+                      dataType="wstr"
+                      length="50"
+                      name="SEXO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output].ExternalColumns[CANTIDAD]"
+                      dataType="i4"
+                      name="CANTIDAD" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[FECHA HECHO]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[FECHA HECHO]"
+                      name="FECHA HECHO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[COD_DEPTO]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[COD_DEPTO]"
+                      name="COD_DEPTO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[DEPARTAMENTO]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[DEPARTAMENTO]"
+                      name="DEPARTAMENTO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[COD_MUNI]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[COD_MUNI]"
+                      name="COD_MUNI" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[MUNICIPIO]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[MUNICIPIO]"
+                      name="MUNICIPIO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[ZONA]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[ZONA]"
+                      name="ZONA" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[SEXO]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[SEXO]"
+                      name="SEXO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[CANTIDAD]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[CANTIDAD]"
+                      name="CANTIDAD" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[ADO NET Source Output]"
+              endId="Package\Data Flow Task\Bsqueda de ZONAS.Inputs[Lookup Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task\Leer DL_Homicidios.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Lookup Match Output]"
+              endId="Package\Data Flow Task\Busqueda de sexos.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Data Flow Task\Bsqueda de ZONAS.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Lookup Match Output1]"
+              endId="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS.Inputs[ADO NET Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Data Flow Task\Busqueda de sexos.Outputs[Lookup Match Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{24E130E1-EA32-4414-A86D-223910EDB40A}"
+      DTS:From="Package\Crear tabla FAC_HOMICIDIOS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="185,46"
+          Id="Package\Crear tabla FAC_HOMICIDIOS"
+          TopLeft="264,57" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Data Flow Task"
+          TopLeft="273.5,200.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="353.75,103">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,97.5"
+              Start="0,0"
+              End="0,90">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,90" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Data Flow Task\Busqueda de sexos"
+          TopLeft="274,206" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\Data Flow Task\Leer DL_Homicidios"
+          TopLeft="275,24" />
+        <NodeLayout
+          Size="232,42"
+          Id="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS"
+          TopLeft="245,302" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\Data Flow Task\Bsqueda de ZONAS"
+          TopLeft="272,120" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Lookup Match Output]"
+          TopLeft="361.25,162">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,12.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[ADO NET Source Output]"
+          TopLeft="362.5,66">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54"
+              Start="0,0"
+              End="0,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Lookup Match Output1]"
+          TopLeft="361.25,248">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54"
+              Start="0,0"
+              End="0,46.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,17.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Busqueda de sexos">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DIM_SEXO]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Leer DL_Homicidios">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Guardar en FAC_HOMICIDIOS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Bsqueda de ZONAS">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DIM_Zonas]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
